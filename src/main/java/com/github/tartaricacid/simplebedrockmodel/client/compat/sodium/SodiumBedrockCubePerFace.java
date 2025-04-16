@@ -30,7 +30,11 @@ public class SodiumBedrockCubePerFace extends BedrockCubePerFace implements ISod
         int vertexCount = 0;
         long ptr = SCRATCH_BUFFER;
 
+        int faces = getRenderFace(VERTICES, normals);
         for (int i = 0; i < NUM_CUBE_FACES; i++) {
+            if ((faces & (1 << i)) == 0) {
+                continue;
+            }
             emitVertex(ptr, VERTICES[VERTEX_ORDER[i][0]].x, VERTICES[VERTEX_ORDER[i][0]].y, VERTICES[VERTEX_ORDER[i][0]].z,
                     color, uvs[i][1], uvs[i][2], texV, texU, NORMALS[i]);
             ptr += STRIDE;

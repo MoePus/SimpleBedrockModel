@@ -97,7 +97,11 @@ public class BedrockCubeBox implements BedrockCube {
         Matrix4f matrix4f = pose.pose();
         prepareVertices(matrix4f);
 
+        int faces = getRenderFace(VERTICES, normals);
         for (int i = 0; i < NUM_CUBE_FACES; i++) {
+            if ((faces & (1 << i)) == 0) {
+                continue;
+            }
             consumer.vertex(VERTICES[VERTEX_ORDER[i][0]].x, VERTICES[VERTEX_ORDER[i][0]].y, VERTICES[VERTEX_ORDER[i][0]].z,
                     r, g, b, a, uvs[uvOrder[i][1]], uvs[uvOrder[i][2]], texV, texU, normals[i].x, normals[i].y, normals[i].z);
 
